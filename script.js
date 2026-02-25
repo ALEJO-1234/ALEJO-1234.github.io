@@ -133,14 +133,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = formData.get('email');
         const company = formData.get('company') || 'No especificada';
         const businessType = formData.get('business-type');
-        const websiteGoal = formData.get('website-goal');
         const servicesInterest = formData.get('services-interest');
         const budget = formData.get('budget');
-        const automation = formData.get('automation');
         const message = formData.get('message') || 'Sin mensaje adicional';
-        
+
         // Simple validation
-        if (!name || !email || !businessType || !websiteGoal || !servicesInterest || !budget || !automation) {
+        if (!name || !email || !businessType || !servicesInterest || !budget) {
             alert('Por favor, completa todos los campos obligatorios marcados con *');
             return;
         }
@@ -154,13 +152,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Get display values for selects
         const businessTypeText = getSelectText('business-type', businessType);
-        const websiteGoalText = getSelectText('website-goal', websiteGoal);
         const servicesInterestText = getSelectText('services-interest', servicesInterest);
         const budgetText = getSelectText('budget', budget);
-        const automationText = getSelectText('automation', automation);
-        
+
         // Create personalized recommendation
-        const recommendedApproach = getPersonalizedApproach(budget, automation, websiteGoal, servicesInterest);
+        const recommendedApproach = getPersonalizedApproach(budget, servicesInterest);
         
         // Show loading state
         const submitButton = contactForm.querySelector('button[type="submit"]');
@@ -213,10 +209,8 @@ DATOS DEL CLIENTE:
 📊 INFORMACIÓN DE CALIFICACIÓN:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🏭 Tipo de Negocio: ${businessTypeText}
-🎯 Objetivo Web: ${websiteGoalText}
 🎨 Servicio de Interés: ${servicesInterestText}
 💰 Presupuesto: ${budgetText}
-🤖 Automatización: ${automationText}
 
 💡 ENFOQUE RECOMENDADO: ${recommendedApproach.approach}
 ${recommendedApproach.reason}
@@ -266,71 +260,48 @@ Sistema de contacto IAWebPro`);
     }
 
     // Helper function to provide personalized approach based on answers
-    function getPersonalizedApproach(budget, automation, goal, service) {
+    function getPersonalizedApproach(budget, service) {
         let approach = "Solución Personalizada";
         let features = [];
-        
-        // Determine primary service approach
-        if (service === 'web-completa') {
-            approach = "Página Web Profesional Completa";
-            features.push("Sitio web responsive con diseño profesional");
-            features.push("Integración de métodos de pago (USDT, PayPal, Stripe)");
-        } else if (service === 'landing-estrategica') {
-            approach = "Landing Page Estratégica";
-            features.push("Página optimizada para conversiones");
-            features.push("Integración con email marketing y campañas");
-        } else if (service === 'chatbots') {
-            approach = "Chatbots Inteligentes";
-            features.push("Automatización multicanal (WhatsApp, Facebook, Instagram)");
-            features.push("Respuestas automáticas 24/7 con flujos de venta");
-        } else if (service === 'automatizacion') {
-            approach = "Automatización Multicanal";
-            features.push("Centralización de mensajería en un solo sistema");
-            features.push("Seguimiento y recordatorios automáticos");
-        } else if (service === 'contenido-digital') {
-            approach = "Creación de Contenido Digital";
-            features.push("Posts profesionales para redes sociales");
-            features.push("Plantillas personalizadas y estrategia visual");
+
+        if (service === 'pagina-web') {
+            approach = "Página Web para Negocios";
+            features.push("Diseño responsive y profesional");
+            features.push("Formulario de contacto + botón WhatsApp");
+            features.push("Optimización SEO incluida");
+        } else if (service === 'landing-page') {
+            approach = "Landing Page de Conversión";
+            features.push("Diseño enfocado en ventas y captación de leads");
+            features.push("Enlace directo a WhatsApp e Instagram");
+            features.push("Lista para campañas publicitarias");
+        } else if (service === 'pagos-crypto') {
+            approach = "Integración de Pagos en Criptomonedas";
+            features.push("Bitcoin, USDT/USDC, Binance Pay");
+            features.push("Sin comisiones de terceros");
+            features.push("Cobro internacional sin intermediarios");
+        } else if (service === 'bot-ia') {
+            approach = "Bot con Inteligencia Artificial";
+            features.push("Bot para WhatsApp, Instagram y Facebook");
+            features.push("Respuestas automáticas 24/7");
+            features.push("Captación de leads y guía hacia la venta");
         } else if (service === 'paquete-completo') {
             approach = "Paquete Completo de Servicios";
-            features.push("Combinación de múltiples servicios digitales");
-            features.push("Solución integral para presencia digital completa");
+            features.push("Web + Landing Page + Pagos Crypto + Bot IA");
+            features.push("Solución digital integral para tu negocio");
         }
-        
-        // Add additional features based on goal
-        if (goal === 'vender' || goal === 'leads') {
-            features.push("Sistema de captación de leads optimizado");
-            features.push("Integración con herramientas de ventas");
-        } else if (goal === 'reservas') {
-            features.push("Sistema de reservas automatizado");
-            features.push("Calendario integrado con notificaciones");
-        } else if (goal === 'informacion' || goal === 'branding') {
-            features.push("Diseño enfocado en imagen de marca");
-            features.push("Contenido optimizado para SEO");
-        }
-        
-        // Add automation features
-        if (automation === 'si-completa') {
-            features.push("Automatización avanzada con IA");
-            features.push("Integración completa WhatsApp/Telegram");
-        } else if (automation === 'si-basica' || automation === 'si-whatsapp') {
-            features.push("Chatbot básico personalizado");
-            features.push("Conexión WhatsApp/Telegram");
-        }
-        
-        // Budget consideration
+
         let budgetNote = "";
-        if (budget === 'menos-50') {
-            budgetNote = "Solución económica pero efectiva";
-        } else if (budget === 'mas-500') {
+        if (budget === 'menos-100') {
+            budgetNote = "Solución inicial efectiva y económica";
+        } else if (budget === 'mas-600') {
             budgetNote = "Solución premium con todas las funcionalidades";
         } else {
             budgetNote = "Solución balanceada precio-funcionalidad";
         }
-        
+
         return {
             approach: approach,
-            reason: `✅ Enfoque: ${approach}\n✅ ${budgetNote}\n✅ Incluye: ${features.join(' + ')}\n✅ ${features.length > 0 ? 'Personalización según tus necesidades específicas' : 'Funcionalidades adicionales según necesidad'}`
+            reason: `✅ Servicio: ${approach}\n✅ ${budgetNote}\n✅ Incluye: ${features.join(' + ')}`
         };
     }
 
@@ -445,13 +416,12 @@ Sistema de contacto IAWebPro`);
             keywords: ['servicio', 'servicios', 'que hacen', 'ofrecen', 'productos', 'soluciones'],
             responses: [
                 {
-                    text: "¡Ofrecemos 5 servicios digitales profesionales:",
+                    text: "¡Ofrecemos 4 servicios digitales profesionales:",
                     options: [
-                        "🌐 **Páginas Web Profesionales** - Sitios completos con pagos integrados",
-                        "⚡ **Landing Pages Estratégicas** - Páginas enfocadas en conversión", 
-                        "🤖 **Chatbots Inteligentes** - Automatización 24/7 multicanal",
-                        "🔗 **Automatización Multicanal** - Centralización de mensajería",
-                        "🎨 **Contenido Digital** - Posts y estrategia visual de marca"
+                        "🌐 **Páginas Web para Negocios** - Sitios sencillos, modernos y efectivos",
+                        "🚀 **Landing Pages de Conversión** - Para vender y captar clientes",
+                        "₿ **Pagos en Criptomonedas** - Bitcoin, USDT, Binance Pay integrado",
+                        "🤖 **Bots con IA** - Chatbots para WhatsApp, Instagram y Facebook 24/7"
                     ],
                     followUp: "¿Te interesa algún servicio en particular?"
                 }
@@ -577,17 +547,17 @@ Sistema de contacto IAWebPro`);
             };
         }
 
-        // Check for automation inquiries
-        if (message.includes('automatización') || message.includes('centralizar') || message.includes('multicanal')) {
+        // Check for crypto payment inquiries
+        if (message.includes('crypto') || message.includes('bitcoin') || message.includes('usdt') || message.includes('binance') || message.includes('pago') || message.includes('cripto')) {
             return {
-                text: "¡Excelente! Nuestra **Automatización Multicanal** te permite:",
+                text: "¡Perfecto! Integramos **Pagos en Criptomonedas** en tu sitio:",
                 options: [
-                    "🔗 Centralizar WhatsApp, Messenger e Instagram en un sistema",
-                    "⏰ Recordatorios y seguimiento automático de clientes",
-                    "📊 Gestión unificada de todas tus conversaciones",
-                    "🤖 Respuestas automáticas coordinadas en todas las plataformas"
+                    "₿ Bitcoin (BTC) - La más reconocida a nivel global",
+                    "💵 USDT / USDC - Stablecoins sin volatilidad",
+                    "🟡 Binance Pay - Múltiples monedas desde tu cuenta Binance",
+                    "✅ Sin comisiones bancarias ni intermediarios"
                 ],
-                followUp: "¿Actualmente manejas clientes en varias plataformas por separado?"
+                followUp: "¿Te gustaría integrar pagos crypto en tu web o landing page?"
             };
         }
 
@@ -595,9 +565,10 @@ Sistema de contacto IAWebPro`);
         return {
             text: "Entiendo tu consulta. Te puedo ayudar con:",
             options: [
-                "🚀 **Servicios** - Web, Landing Pages, Chatbots, Automatización, Contenido",
-                "💰 **Cotización** - Propuesta personalizada para tu negocio",
-                "📞 **Contacto** - Formas de comunicarnos"
+                "🌐 **Páginas Web** - Sitios sencillos y profesionales para tu negocio",
+                "🚀 **Landing Pages** - Páginas para vender y captar clientes",
+                "₿ **Pagos Crypto** - Cobra en Bitcoin, USDT o Binance Pay",
+                "🤖 **Bots con IA** - Chatbots 24/7 para WhatsApp, Instagram y Facebook"
             ],
             followUp: "¿Sobre cuál te gustaría saber más?"
         };

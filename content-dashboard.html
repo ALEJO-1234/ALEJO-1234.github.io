@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 IAWebPro Content Bot - Panel de Control</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .content-preview {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .service-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-cyan-500 p-6">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold mb-2">🤖 IAWebPro Content Bot</h1>
+            <p class="text-blue-100">Panel de Control - Generación Automática de Contenido</p>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-6">
+        <!-- Stats Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2">📱 Posts Generados</h3>
+                <p class="text-3xl font-bold text-cyan-400" id="posts-count">0</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2">📚 Stories Creadas</h3>
+                <p class="text-3xl font-bold text-blue-400" id="stories-count">0</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2">🎯 Servicios Cubiertos</h3>
+                <p class="text-3xl font-bold text-green-400" id="services-count">5</p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h3 class="text-lg font-semibold mb-2">⚡ Estado</h3>
+                <p class="text-xl font-bold text-yellow-400" id="bot-status">🟢 Activo</p>
+            </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Generador Manual -->
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h2 class="text-xl font-bold mb-4">🎮 Generador Manual</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Servicio</label>
+                        <select id="service-select" class="w-full bg-gray-700 border border-gray-600 rounded-md p-2">
+                            <option value="web-profesional">💻 Páginas Web Profesionales</option>
+                            <option value="landing-pages">⚡ Landing Pages Estratégicas</option>
+                            <option value="chatbots">🤖 Chatbots Inteligentes</option>
+                            <option value="automatizacion">🔗 Automatización Multicanal</option>
+                            <option value="contenido-digital">🎨 Contenido Digital</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tipo de Contenido</label>
+                        <select id="content-type-select" class="w-full bg-gray-700 border border-gray-600 rounded-md p-2">
+                            <option value="random">🎲 Aleatorio</option>
+                            <option value="tip">💡 Tip Educativo</option>
+                            <option value="case-study">📈 Caso de Éxito</option>
+                            <option value="benefit">✨ Beneficio</option>
+                            <option value="problem-solution">🚨 Problema-Solución</option>
+                            <option value="motivational">💪 Motivacional</option>
+                            <option value="comparison">⚖️ Comparación</option>
+                        </select>
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        <button id="generate-post" class="flex-1 bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded-md font-medium">
+                            📱 Generar Post
+                        </button>
+                        <button id="generate-story" class="flex-1 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md font-medium">
+                            📚 Generar Story
+                        </button>
+                    </div>
+                    
+                    <button id="generate-calendar" class="w-full bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md font-medium">
+                        📅 Generar Calendario Semanal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Configuración Automática -->
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h2 class="text-xl font-bold mb-4">⚙️ Automatización</h2>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Estado del Bot</label>
+                        <div class="flex items-center space-x-3">
+                            <button id="toggle-automation" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md font-medium">
+                                ▶️ Iniciar Automatización
+                            </button>
+                            <span id="automation-status" class="text-sm text-gray-400">Detenido</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Frecuencia de Posts</label>
+                        <select id="posting-frequency" class="w-full bg-gray-700 border border-gray-600 rounded-md p-2">
+                            <option value="daily">📅 Diario</option>
+                            <option value="twice-daily">📅📅 2 veces al día</option>
+                            <option value="weekly">📅 Semanal</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Stories por Día</label>
+                        <select id="stories-frequency" class="w-full bg-gray-700 border border-gray-600 rounded-md p-2">
+                            <option value="1">1 Story</option>
+                            <option value="2">2 Stories</option>
+                            <option value="3">3 Stories</option>
+                            <option value="5">5 Stories</option>
+                        </select>
+                    </div>
+                    
+                    <div class="bg-gray-700 p-4 rounded-md">
+                        <h3 class="font-medium mb-2">📊 Mix de Contenido</h3>
+                        <div class="text-sm space-y-1">
+                            <div>Tips Educativos: <span class="text-cyan-400">30%</span></div>
+                            <div>Beneficios: <span class="text-blue-400">25%</span></div>
+                            <div>Casos de Éxito: <span class="text-green-400">20%</span></div>
+                            <div>Motivacional: <span class="text-yellow-400">15%</span></div>
+                            <div>Problema-Solución: <span class="text-red-400">10%</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido Generado -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-6">📝 Contenido Generado</h2>
+            <div id="content-output" class="space-y-6">
+                <div class="text-gray-400 text-center py-8">
+                    Genera contenido usando los controles de arriba
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendario de Contenido -->
+        <div class="mt-8" id="content-calendar" style="display: none;">
+            <h2 class="text-2xl font-bold mb-6">📅 Calendario de Contenido Semanal</h2>
+            <div id="calendar-output" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+        </div>
+    </div>
+
+    <script src="content-bot.js"></script>
+    <script>
+        // Initialize dashboard
+        let automationActive = false;
+        let contentBot;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize ContentBot
+            contentBot = new ContentBot();
+            console.log('🤖 Dashboard inicializado correctamente');
+            
+            // Event listeners
+            document.getElementById('generate-post').addEventListener('click', generatePost);
+            document.getElementById('generate-story').addEventListener('click', generateStory);
+            document.getElementById('generate-calendar').addEventListener('click', generateCalendar);
+            document.getElementById('toggle-automation').addEventListener('click', toggleAutomation);
+            
+            updateStats();
+        });
+        
+        function generatePost() {
+            const service = document.getElementById('service-select').value;
+            const contentType = document.getElementById('content-type-select').value;
+            
+            const content = contentBot.generateContent(service, contentType === 'random' ? undefined : contentType);
+            displayGeneratedContent(content, 'post');
+            
+            // Update stats
+            updateStats();
+        }
+        
+        function generateStory() {
+            const service = document.getElementById('service-select').value;
+            const storyContent = contentBot.generateStoryContent(service);
+            displayGeneratedContent(storyContent, 'story');
+            
+            updateStats();
+        }
+        
+        function generateCalendar() {
+            const calendar = contentBot.generateContentCalendar(7);
+            displayCalendar(calendar);
+        }
+        
+        function displayGeneratedContent(content, type) {
+            const output = document.getElementById('content-output');
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'bg-gray-800 p-6 rounded-lg';
+            
+            if (type === 'post') {
+                contentDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-lg font-bold">📱 Post Generado</h3>
+                        <div>
+                            <span class="service-badge bg-${getServiceColor(content.service)}-600">${content.service}</span>
+                            <span class="service-badge bg-gray-600 ml-2">${content.type}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="content-preview mb-4">
+                        <pre class="whitespace-pre-wrap text-sm">${content.content}</pre>
+                    </div>
+                    
+                    <div class="text-xs text-gray-400 mb-2">
+                        <strong>Visual sugerido:</strong> ${content.visualSuggestion}
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button onclick="copyToClipboard('${content.content.replace(/'/g, "\\'")}')" 
+                                class="bg-cyan-600 hover:bg-cyan-700 px-3 py-1 rounded text-sm">
+                            📋 Copiar
+                        </button>
+                        <button onclick="simulatePost()" 
+                                class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm">
+                            📱 Simular Publicación
+                        </button>
+                    </div>
+                `;
+            } else {
+                contentDiv.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-lg font-bold">📚 Story Generada</h3>
+                        <span class="service-badge bg-purple-600">${content.type}</span>
+                    </div>
+                    
+                    <div class="bg-gray-700 p-4 rounded-md mb-4">
+                        <p class="text-sm">${content.content}</p>
+                        <div class="text-xs text-gray-400 mt-2">
+                            Background: ${content.background}
+                            ${content.options ? ' | Opciones: ' + content.options.join(', ') : ''}
+                        </div>
+                    </div>
+                    
+                    <button onclick="copyToClipboard('${content.content.replace(/'/g, "\\'")}')" 
+                            class="bg-purple-600 hover:bg-purple-700 px-3 py-1 rounded text-sm">
+                        📋 Copiar para Story
+                    </button>
+                `;
+            }
+            
+            // Add to top of output
+            if (output.children.length > 0 && output.children[0].textContent.includes('Genera contenido')) {
+                output.innerHTML = '';
+            }
+            output.insertBefore(contentDiv, output.firstChild);
+        }
+        
+        function displayCalendar(calendar) {
+            const calendarSection = document.getElementById('content-calendar');
+            const calendarOutput = document.getElementById('calendar-output');
+            
+            calendarOutput.innerHTML = '';
+            
+            calendar.forEach(day => {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'bg-gray-800 p-4 rounded-lg';
+                dayDiv.innerHTML = `
+                    <h3 class="font-bold mb-2">📅 Día ${day.day}</h3>
+                    <p class="text-sm text-gray-400 mb-3">${day.date}</p>
+                    
+                    <div class="mb-3">
+                        <div class="flex items-center mb-2">
+                            <span class="text-sm font-medium">📱 Post:</span>
+                            <span class="service-badge bg-${getServiceColor(day.post.service)}-600 ml-2 text-xs">
+                                ${day.post.service}
+                            </span>
+                        </div>
+                        <p class="text-xs text-gray-300">${day.post.content.substring(0, 100)}...</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm font-medium mb-1">📚 Stories: ${day.stories.length}</p>
+                        ${day.stories.map(story => 
+                            `<p class="text-xs text-gray-400">• ${story.content.substring(0, 50)}...</p>`
+                        ).join('')}
+                    </div>
+                    
+                    <button onclick="exportDay(${day.day})" 
+                            class="mt-3 bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-xs">
+                        📤 Exportar Día
+                    </button>
+                `;
+                calendarOutput.appendChild(dayDiv);
+            });
+            
+            calendarSection.style.display = 'block';
+        }
+        
+        function toggleAutomation() {
+            automationActive = !automationActive;
+            const button = document.getElementById('toggle-automation');
+            const status = document.getElementById('automation-status');
+            
+            if (automationActive) {
+                button.textContent = '⏹️ Detener Automatización';
+                button.className = 'bg-red-600 hover:bg-red-700 px-4 py-2 rounded-md font-medium';
+                status.textContent = 'Activo - Generando contenido automático';
+                status.className = 'text-sm text-green-400';
+                
+                // Simulate automation
+                startAutomationDemo();
+            } else {
+                button.textContent = '▶️ Iniciar Automatización';
+                button.className = 'bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md font-medium';
+                status.textContent = 'Detenido';
+                status.className = 'text-sm text-gray-400';
+            }
+        }
+        
+        function startAutomationDemo() {
+            if (!automationActive) return;
+            
+            // Simulate automatic content generation
+            setTimeout(() => {
+                if (automationActive) {
+                    const services = ['web-profesional', 'chatbots', 'automatizacion', 'landing-pages', 'contenido-digital'];
+                    const randomService = services[Math.floor(Math.random() * services.length)];
+                    const content = contentBot.generateContent(randomService);
+                    
+                    displayGeneratedContent(content, 'post');
+                    updateStats();
+                    
+                    showNotification('🤖 Contenido automático generado');
+                    startAutomationDemo(); // Continue loop
+                }
+            }, 10000); // Every 10 seconds for demo
+        }
+        
+        function updateStats() {
+            const postsCount = document.querySelectorAll('#content-output .bg-gray-800').length;
+            document.getElementById('posts-count').textContent = postsCount;
+            
+            // Simulate story count
+            const storiesCount = Math.floor(postsCount * 1.5);
+            document.getElementById('stories-count').textContent = storiesCount;
+        }
+        
+        function getServiceColor(service) {
+            const colors = {
+                'Páginas Web Profesionales': 'cyan',
+                'Landing Pages Estratégicas': 'blue',
+                'Chatbots Inteligentes': 'green',
+                'Automatización Multicanal': 'purple',
+                'Contenido Digital': 'pink'
+            };
+            return colors[service] || 'gray';
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('📋 Copiado al portapapeles');
+            });
+        }
+        
+        function simulatePost() {
+            showNotification('📱 Post simulado publicado en Instagram');
+        }
+        
+        function exportDay(day) {
+            showNotification(`📤 Contenido del día ${day} exportado`);
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-600 text-white px-4 py-2 rounded-md z-50';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
