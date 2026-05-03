@@ -395,7 +395,7 @@ ${formData.message}
 ID Cliente: ${this.clientId}
 Fecha: ${new Date().toLocaleString()}`;
         
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
         window.open(gmailUrl, '_blank');
         
         this.hideSupportModal();
@@ -469,7 +469,7 @@ Cambios solicitados:
 Gracias,
 ${this.clientData.name}`;
         
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.open(gmailUrl, '_blank');
     }
 
@@ -489,7 +489,7 @@ Información para entrenar al chatbot:
 Gracias,
 ${this.clientData.name}`;
         
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.open(gmailUrl, '_blank');
     }
 
@@ -512,7 +512,7 @@ Información sobre mi negocio:
 Gracias,
 ${this.clientData.name}`;
         
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.open(gmailUrl, '_blank');
     }
 

@@ -423,7 +423,7 @@ ${planFeatures.map(feature => `✅ ${feature}`).join('\n')}
 
 Saludos,
 Equipo IAWebPro
-u2331310679@gmail.com`;
+Alesecundarioolivero@gmail.com`;
     }
 
     generateActivationEmailBody(client) {
@@ -456,7 +456,7 @@ ${loginUrl}
 ¡Bienvenido oficialmente a IAWebPro!
 
 Equipo IAWebPro
-u2331310679@gmail.com`;
+Alesecundarioolivero@gmail.com`;
     }
 
     getPlanFeatures(plan) {

@@ -123,8 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Contact Form Handling - Supabase + Gmail Integration
+    // (Form removed in funnel redesign — keep handler defensive in case it returns)
     const contactForm = document.getElementById('contact-form');
-    contactForm.addEventListener('submit', async function(e) {
+    if (contactForm) contactForm.addEventListener('submit', async function(e) {
         e.preventDefault(); // Always prevent default form submission
         
         // Get form data
@@ -231,7 +232,7 @@ Para responder, simplemente responde a este email o escribe directamente a: ${em
 Sistema de contacto IAWebPro`);
         
         // Create Gmail web URL
-        const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${subject}&body=${body}`;
+        const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${subject}&body=${body}`;
         
         // Update button text
         submitButton.textContent = 'Abriendo Gmail...';
@@ -437,7 +438,7 @@ Sistema de contacto IAWebPro`);
                         "📋 **Análisis Gratuito** - Evaluamos tu proyecto sin compromiso",
                         "🎯 **Propuesta a Medida** - Te enviamos una cotización detallada"
                     ],
-                    followUp: "¿Te gustaría llenar nuestro formulario para recibir una propuesta personalizada?"
+                    followUp: "¿Te gustaría escribirnos por WhatsApp para recibir una propuesta personalizada?"
                 }
             ]
         },
@@ -447,11 +448,11 @@ Sistema de contacto IAWebPro`);
                 {
                     text: "¡Perfecto! Puedes contactarnos de varias formas:",
                     options: [
-                        "📧 **Formulario Web** - Llena el formulario para una propuesta personalizada",
+                        "📲 **WhatsApp** - +351 933 216 910 (respuesta en menos de 24h)",
                         "📱 **Instagram** - Síguenos @iawebpro",
-                        "📞 **Email Directo** - u2331310679@gmail.com"
+                        "📧 **Email Directo** - Alesecundarioolivero@gmail.com"
                     ],
-                    followUp: "Te recomendamos usar nuestro formulario para que podamos preparar una propuesta exacta para tu negocio."
+                    followUp: "Te recomendamos escribirnos por WhatsApp para preparar una propuesta exacta para tu negocio."
                 }
             ]
         },
@@ -489,12 +490,12 @@ Sistema de contacto IAWebPro`);
             return {
                 text: "¡Excelente! Nuestro servicio de **Páginas Web Profesionales** incluye:",
                 options: [
-                    "🌐 Sitios completos para empresas y emprendimientos",
+                    "🌐 Sitios completos desde $50 USD",
                     "📱 Diseño responsivo optimizado para móviles",
-                    "💳 Formularios de contacto y métodos de pago (USDT, PayPal, Stripe)",
+                    "💳 Botón WhatsApp + métodos de pago en cripto",
                     "⚡ Optimización para conversiones y SEO"
                 ],
-                followUp: "¿Te gustaría llenar nuestro formulario para recibir una cotización personalizada?"
+                followUp: "¿Te gustaría escribirnos por WhatsApp para recibir una cotización personalizada?"
             };
         }
 
@@ -774,12 +775,11 @@ Sistema de contacto IAWebPro`);
         binance: 'QR_CODE' // Binance Pay QR Code
     };
 
-    // Payment method handlers
+    // Payment method handlers (PayPal/transfer handled manually via WhatsApp)
     const paymentHandlers = {
         btc: (amount, plan) => handleCryptoPayment('Bitcoin', 'BTC', cryptoAddresses.btc, amount, plan),
         usdc: (amount, plan) => handleCryptoPayment('USD Coin (Solana)', 'USDC', cryptoAddresses.usdc, amount, plan),
-        binance: (amount, plan) => handleBinancePay(amount, plan),
-        card: (amount, plan) => handleCardPayment(amount, plan)
+        binance: (amount, plan) => handleBinancePay(amount, plan)
     };
 
     // Open payment modal
@@ -832,7 +832,7 @@ Sistema de contacto IAWebPro`);
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. Envía el equivalente a $${amount} USD en ${symbol} a la dirección de arriba
 2. Guarda el hash de la transacción
-3. Envíanos un email a u2331310679@gmail.com con:
+3. Envíanos un email a Alesecundarioolivero@gmail.com con:
    • Hash de transacción
    • Plan seleccionado
    • Tu email de contacto
@@ -863,7 +863,7 @@ Por favor, confirmen la recepción del pago para activar mi servicio.
 Gracias,
 [TU NOMBRE]`);
             
-            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${emailSubject}&body=${emailBody}`, '_blank');
+            window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${emailSubject}&body=${emailBody}`, '_blank');
         }
         
         closePaymentModalHandler();
@@ -901,7 +901,7 @@ Gracias,
                             <p>2. Ve a "Pay" > "Scan"</p>
                             <p>3. Escanea este código QR</p>
                             <p>4. Confirma el pago de $${amount} USD</p>
-                            <p>5. Envía captura del pago a:<br><span class="text-cyan-400">u2331310679@gmail.com</span></p>
+                            <p>5. Envía captura del pago a:<br><span class="text-cyan-400">Alesecundarioolivero@gmail.com</span></p>
                         </div>
                     </div>
                     
@@ -916,7 +916,7 @@ Gracias,
                             class="bg-gray-600 hover:bg-gray-500 text-white px-6 py-2 rounded-md transition-colors mr-2">
                         Cerrar
                     </button>
-                    <button onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=u2331310679@gmail.com&su=${encodeURIComponent('Pago Binance Pay - Plan ' + planData[plan].name)}&body=${encodeURIComponent('Hola, he realizado un pago con Binance Pay por $' + amount + ' USD para el plan ' + planData[plan].name + '. Adjunto captura del pago.')}')"
+                    <button onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=Alesecundarioolivero@gmail.com&su=${encodeURIComponent('Pago Binance Pay - Plan ' + planData[plan].name)}&body=${encodeURIComponent('Hola, he realizado un pago con Binance Pay por $' + amount + ' USD para el plan ' + planData[plan].name + '. Adjunto captura del pago.')}')"
                             class="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-2 rounded-md transition-colors">
                         📧 Enviar Comprobante
                     </button>
@@ -931,26 +931,7 @@ Gracias,
     }
 
     // Handle Card Payment - Coming Soon
-    function handleCardPayment(amount, plan) {
-        alert(`
-💳 PRÓXIMAMENTE DISPONIBLE
-
-💰 Monto: $${amount} USD
-📦 Plan: ${planData[plan].name}
-
-🚧 TEMPORALMENTE NO DISPONIBLE:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Los pagos con tarjeta estarán disponibles pronto.
-
-Por ahora puedes pagar con:
-• Bitcoin (BTC)
-• USDC (Solana)
-• Binance Pay
-
-📧 ¿Necesitas ayuda? Contacta: u2331310679@gmail.com`);
-        
-        closePaymentModalHandler();
-    }
+    // PayPal/transfer handled manually via WhatsApp — no automated handler needed
 
     // Event listeners for payment buttons
     paymentButtons.forEach(btn => {
